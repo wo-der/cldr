@@ -1,0 +1,1 @@
+do return { ['identity'] = { ['language'] = "ur"; ['territory'] = "PK"; }; }; end;
