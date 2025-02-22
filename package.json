@@ -8,7 +8,11 @@
     "watch": "rbxtsc -w",
     "prepublishOnly": "npm run build"
   },
-  "keywords": [],
+  "keywords": [
+    "roblox",
+    "roblox-ts",
+    "cldr"
+  ],
   "author": "woder",
   "license": "MIT",
   "type": "commonjs",
