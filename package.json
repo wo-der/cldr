@@ -9,8 +9,8 @@
     "prepublishOnly": "npm run build"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "woder",
+  "license": "MIT",
   "type": "commonjs",
   "types": "out/index.d.ts",
   "files": [
