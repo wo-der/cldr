@@ -1,3 +1,15 @@
+import {
+	Dates,
+	Delimiters,
+	Identity,
+	Layout,
+	ListPatterns,
+	LocaleDefinition,
+	LocaleDisplayNames,
+	Numbers,
+	Units,
+} from "./Data/DataTemplate";
+
 export type Language =
 	| "af"
 	| "am"
@@ -144,72 +156,13 @@ export type Territory =
 export type Script = "Hans" | "Hant" | "Latn";
 export type Variant = "POSIX" | "EURO" | "VALENCIA" | "1901" | "1996";
 
-interface NumberSymbols {
-	decimal: string;
-	group: string;
-	list: string;
-	percentSign: string;
-	plusSign: string;
-	minusSign: string;
-	exponential: string;
-	superscriptingExponent: string;
-	perMille: string;
-	infinity: string;
-	nan: string;
-}
-
-interface DecimalFormat {
-	format: string;
-	long: Record<number, { one: string; other: string }>;
-	short: Record<number, { one: string; other: string }>;
-}
-
-interface PercentFormat {
-	format: string;
-}
-
-interface ScientificFormat {
-	format: string;
-}
-
-interface CurrencyFormat {
-	format: {
-		standard: string;
-		accounting: string;
-	};
-	short: Record<number, { one: string; other: string }>;
-}
-
-interface LatnNumbers {
-	symbols: NumberSymbols;
-	decimalFormats: DecimalFormat;
-	percentFormats: PercentFormat;
-	scientificFormats: ScientificFormat;
-	currencyFormats: CurrencyFormat;
-}
-
-interface PluralForm {
-	one: string;
-}
-
-interface OrdinalForm {
-	few: string;
-	one: string;
-	two: string;
-}
-
-interface LocaleNumbers {
-	latn: LatnNumbers;
-	pluralForm: PluralForm;
-	ordinalForm: OrdinalForm;
-}
-
 export class Locale<
 	L extends Language = Language,
 	T extends Territory | string = "",
 	S extends Script | string = "",
 	V extends Variant | string = "",
-> {
+> implements LocaleDefinition
+{
 	/** The language code (e.g., "en" for English, "ko" for South Korea). */
 	public readonly language: L;
 	/** The territory or region code (e.g., "US" for United States, "KR" for South Korea). */
@@ -218,7 +171,15 @@ export class Locale<
 	public readonly script: S;
 	/** The variant type (e.g., "POSIX" for POSIX compatibility). */
 	public readonly variant: V;
-	public readonly numbers: LocaleNumbers;
+
+	public readonly identity: Identity;
+	public readonly localeDisplayNames: LocaleDisplayNames;
+	public readonly layout: Layout;
+	public readonly delimiters: Delimiters;
+	public readonly dates: Dates;
+	public readonly numbers: Numbers;
+	public readonly units: Units;
+	public readonly listPatterns: ListPatterns;
 
 	/**
 	 * Creates a new `Locale` instance.

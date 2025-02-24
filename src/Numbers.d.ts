@@ -1,14 +1,17 @@
 import { Language, Locale, Script, Territory, Variant } from "./Locale";
 
+type PluralCategory = "zero" | "one" | "two" | "few" | "many" | "other";
+type CurrencyFormat = "standard" | "accounting" | "short";
+
 interface CurrencyInfo {
-	displayName: { [key: string]: string }; // 지역별 통화 이름 (예: "US Dollar", "Euro")
+	displayName: Partial<Record<PluralCategory, string>>;
 	symbol: {
-		symbol: string; // 기본 통화 기호 (예: "$", "€")
-		narrow?: string; // 좁은 형태의 기호 (예: "US$" → "$")
-		international?: string; // 국제 표기법 (예: "USD", "EUR")
-		ISO?: string; // ISO 4217 코드 (예: "USD", "EUR", "KRW")
+		symbol: string;
+		narrow?: string;
+		international?: string;
+		ISO?: string;
 	};
-	currencyFormat?: number | string; // 통화 형식 (예: 1 → 소수점 없이, 2 → 소수점 2자리)
+	currencyFormat?: number | string;
 }
 
 interface Numbers {
@@ -24,6 +27,7 @@ interface Numbers {
 		decimalQuantization?: boolean,
 		ignoreMinimumGroupingDigit?: boolean,
 	) => string;
+
 	FormatDecimal: <
 		L extends Language = Language,
 		T extends Territory | string = "",
@@ -35,6 +39,7 @@ interface Numbers {
 		decimalQuantization?: boolean,
 		ignoreMinimumGroupingDigit?: boolean,
 	) => string;
+
 	FormatScientific: <
 		L extends Language = Language,
 		T extends Territory | string = "",
@@ -46,6 +51,7 @@ interface Numbers {
 		decimalQuantization?: boolean,
 		ignoreMinimumGroupingDigit?: boolean,
 	) => string;
+
 	FormatPercent: <
 		L extends Language = Language,
 		T extends Territory | string = "",
@@ -57,12 +63,13 @@ interface Numbers {
 		decimalQuantization?: boolean,
 		ignoreMinimumGroupingDigit?: boolean,
 	) => string;
+
 	FormatCurrency: <
 		L extends Language = Language,
 		T extends Territory | string = "",
 		S extends Script | string = "",
 		V extends Variant | string = "",
-		F extends "standard" | "accounting" | "short" = "standard",
+		F extends CurrencyFormat = "standard",
 	>(
 		locale: Locale<L, T, S, V>,
 		value: number | string,
@@ -72,34 +79,37 @@ interface Numbers {
 		decimalQuantization?: boolean,
 		ignoreMinimumGroupingDigit?: boolean,
 	) => string;
+
 	FormatCompactDecimal: <
 		L extends Language = Language,
 		T extends Territory | string = "",
 		S extends Script | string = "",
 		V extends Variant | string = "",
-		F extends "standard" | "accounting" | "short" = "standard",
+		F extends CurrencyFormat = "standard",
 	>(
 		locale: Locale<L, T, S, V>,
 		value: number | string,
 		format?: F,
-		decimalPlaces?: Array<number> | number,
+		decimalPlaces?: number[] | number,
 		ignoreMinimumGroupingDigit?: boolean,
 	) => string;
+
 	FormatCompactCurrency: <
 		L extends Language = Language,
 		T extends Territory | string = "",
 		S extends Script | string = "",
 		V extends Variant | string = "",
-		F extends "standard" | "accounting" | "short" = "standard",
+		F extends CurrencyFormat = "standard",
 	>(
 		locale: Locale<L, T, S, V>,
 		value: number | string,
 		currency?: CurrencyInfo,
 		currencyDigits?: boolean,
 		format?: F,
-		decimalPlaces?: Array<number> | number,
+		decimalPlaces?: number[] | number,
 		ignoreMinimumGroupingDigit?: boolean,
 	) => string;
+
 	ParseFloat: <
 		L extends Language = Language,
 		T extends Territory | string = "",
@@ -110,6 +120,7 @@ interface Numbers {
 		str: string,
 		strict?: boolean,
 	) => number;
+
 	ParseDecimal: <
 		L extends Language = Language,
 		T extends Territory | string = "",
